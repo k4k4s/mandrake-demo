@@ -1,2 +1,30 @@
-application/cache/*
-application/logs/*
+content://media/external/file/1000024459
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+
+let mandrake = { x: 400, y: 300, width: 40, height: 20, color: "red", speed: 4 };
+
+let keys = {};
+document.addEventListener("keydown", e => keys[e.key] = true);
+document.addEventListener("keyup", e => keys[e.key] = false);
+
+function update() {
+    if (keys["ArrowUp"]) mandrake.y -= mandrake.speed;
+    if (keys["ArrowDown"]) mandrake.y += mandrake.speed;
+    if (keys["ArrowLeft"]) mandrake.x -= mandrake.speed;
+    if (keys["ArrowRight"]) mandrake.x += mandrake.speed;
+}
+
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = mandrake.color;
+    ctx.fillRect(mandrake.x, mandrake.y, mandrake.width, mandrake.height);
+}
+
+function loop() {
+    update();
+    draw();
+    requestAnimationFrame(loop);
+}
+
+loop();
